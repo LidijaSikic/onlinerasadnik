@@ -1,0 +1,26 @@
+<div class="menu-container"
+     xmlns:th="http://www.thymeleaf.org"
+     xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4" >
+    <a th:href="@{/}">Home</a>
+    |
+    <a th:href="@{/listaProizvoda}">
+        Popis proizvoda
+    </a>
+    |
+    <a th:href="@{/kosarica}">
+        Moja kosarica
+    </a>
+    |
+    <th:block sec:authorize="hasAnyRole('MANAGER','ZAPOSLENIK')">
+        <a th:href="@{/admin/orderList}">
+            Popis narudzbi
+        </a>
+        |
+    </th:block>
+    <th:block sec:authorize="hasRole('MANAGER')">
+        <a th:href="@{/admin/proizvod}">
+            Dodaj proizvod
+        </a>
+        |
+    </th:block>
+</div>

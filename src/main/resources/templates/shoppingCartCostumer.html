@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Unos podataka o kupcu</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/stilovi.css}">
+</head>
+<body>
+<th:block th:include="/_header"></th:block>
+<th:block th:include="/_menu"></th:block>
+
+<div class="page-title">Unos podataka o kupcu</div>
+
+<form method="POST" th:object = "${KupacInfo}" th:action="@{/shoppingCartCustomer}">
+
+    <table>
+        <tr>
+            <td>Ime *</td>
+            <td><input th:field="*{ime}" /></td>
+            <td>
+                  <span class="error-message"
+                        th:if="${#fields.hasErrors('ime')}" th:errors="*{ime}">..</span>
+            </td>
+        </tr>
+        <tr>
+            <td>Mail *</td>
+            <td><input th:field="*{mail}" /></td>
+            <td>
+                  <span class="error-message"
+                        th:if="${#fields.hasErrors('mail')}" th:errors="*{mail}">..</span>
+            </td>
+        </tr>
+        <tr>
+            <td>Tel *</td>
+            <td><input th:field="*{tel}" /></td>
+            <td>
+                  <span class="error-message"
+                        th:if="${#fields.hasErrors('tel')}" th:errors="*{tel}">..</span>
+            </td>
+        </tr>
+        <tr>
+            <td>Adresa *</td>
+            <td><input th:field="*{adresa}" /></td>
+            <td>
+                  <span class="error-message"
+                        th:if="${#fields.hasErrors('adresa')}" th:errors="*{adresa}">..</span>
+            </td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+            <td><input type="submit" value="Posalji" /> <input type="reset"
+                                                              value="Ponisti" /></td>
+        </tr>
+    </table>
+
+</form>
+
+<th:block th:include="/_footer"></th:block>
+
+</body>
+</html>

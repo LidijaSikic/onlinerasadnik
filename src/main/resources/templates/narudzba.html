@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista proizvoda</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/stilovi.css}">
+</head>
+<body>
+<th:block th:include="/_header"></th:block>
+<th:block th:include="/_menu"></th:block>
+
+<div class="page-title">Narudzba Info</div>
+
+<div class="customer-info-container">
+    <h3>Podaci o kupcu:</h3>
+    <ul>
+        <li>Ime: <span th:utext="${narudzbaInfo.imeKupca}"></span></li>
+        <li>Mail: <span th:utext="${narudzbaInfo.kupacMail}"></span></li>
+        <li>Tel: <span th:utext="${narudzbaInfo.kupacTel}"></span></li>
+        <li>Adresa: <span th:utext="${narudzbaInfo.kupacAdresa}"></span></li>
+    </ul>
+    <h3>Narudzba Ukupno:</h3>
+    <ul>
+        <li>Total:
+            <span class="total" th:utext="${#numbers.formatDecimal(narudzbaInfo.iznos,3,2,'COMMA')}">
+               </span>
+        </li>
+    </ul>
+</div>
+<br/>
+<table border="1" style="width:100%">
+    <tr>
+        <th>Proizvod sifra</th>
+        <th>Proizvod Naziv</th>
+        <th>Kolicina</th>
+        <th>cijena</th>
+        <th>Iznos</th>
+    </tr>
+    <tr th:each="detaljiInfo : ${detaljiNarudzbeInfo.detalji}">
+        <td th:utext="${detaljiNarudzbeInfo.proizvodSifra}"></td>
+        <td th:utext="${detaljiNarudzbeInfo.proizvodNaziv}"></td>
+        <td th:utext="${detaljiNarudzbeInfo.kolicina}"></td>
+        <td th:utext="${#numbers.formatDecimal(detaljiNarudzbeInfo.cijena,3,2,'COMMA')}"></td>
+        <td th:utext="${#numbers.formatDecimal(detaljiNarudzbeInfo.iznos,3,2,'COMMA')}"></td>
+    </tr>
+</table>
+
+<th:block th:include="/_footer"></th:block>
+
+</body>
+</html>

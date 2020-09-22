@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista proizvoda</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/stilovi.css}">
+</head>
+<body>
+<th:block th:include="/_header"></th:block>
+<th:block th:include="/_menu"></th:block>
+
+<div class="page-title">Order List</div>
+<div>Total Order Count: <span th:utext="${paginationResult.maxRezultat}"></span></div>
+<table border="1" style="width:100%">
+    <tr>
+        <th>Br. narudzbe</th>
+        <th>Datum narudzbe</th>
+        <th>Ime kupca</th>
+        <th>Adresa kupca</th>
+        <th>Mail kupca</th>
+        <th>Iznos</th>
+        <th>Pregled</th>
+    </tr>
+    <tr th:each="narInfo : ${paginationResult.list}">
+        <td th:utext="${narInfo.brNarudzbe}"></td>
+        <td th:utext="${#dates.format(narInfo.datumNarudzbe,'dd-MM-yyyy HH:mm')}"></td>
+        <td th:utext="${narInfo.imeKupca}"></td>
+        <td th:utext="${narInfo.kupacAdresa}"></td>
+        <td th:utext="${narInfo.kupacMail}"></td>
+        <td style="color:red;" th:utext="${#numbers.formatDecimal(narInfo.iznos,3,2,'COMMA')}">
+        </td>
+        <td><a th:href="@{|/admin/narudzba?brNarudzbe=${orderInfo.id}|}">View</a></td>
+    </tr>
+</table>
+<div class="page-navigator" th:if="${paginationResult.ukupnoStranica > 1}" >
+    <th:block th:each="page: ${paginationResult.navigationPages}">
+        <a th:if="${page != -1}" class="nav-item"
+           th:href="@{|/admin/orderList?page=${page}|}" th:utext="${page}"></a>
+
+        <span th:if="${page == -1}" class="nav-item"> ... </span>
+    </th:block>
+</div>
+
+<th:block th:include="/_footer"></th:block>
+
+</body>
+</html>

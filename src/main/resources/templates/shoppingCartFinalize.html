@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Dovrsi kupnju</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/stilovi.css}">
+</head>
+<body>
+
+<th:block th:include="/_header"></th:block>
+<th:block th:include="/_menu"></th:block>
+
+<div class="page-title">Dovrsi</div>
+<div class="container">
+    <h3>Hvala sto ste narucili kod nas</h3>
+    Broj vase narudzbe je: <span th:utext="${lastOrderedCart.brNar}"></span>
+</div>
+
+<th:block th:include="/_footer"></th:block>
+
+</body>
+</html>

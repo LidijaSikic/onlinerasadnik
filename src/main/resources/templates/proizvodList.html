@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista proizvoda</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/stilovi.css}">
+</head>
+<body>
+<th:block th:include="/_header"></th:block>
+<th:block th:include="/_menu"></th:block>
+
+<div class="page-title">Product List</div>
+
+<div class="product-preview-container" th:each="proizvInfo : ${paginationProducts.list}">
+    <ul>
+        <li><img class="product-image"
+                 th:src="@{|/slikaProizvoda?sifra=${proizvodiInfo.sifra}|}" /></li>
+        <li>Sifra: <span th:utext="${proizvInfo.sifra}"></span></li>
+        <li>Naziv: <span th:utext="${proizvInfo.naziv}"></span></li>
+        <li>Cijena: <span th:utext="${#numbers.formatDecimal(proizvInfo.cijena,3,2,'COMMA')}"></span></li>
+        <li>
+            <a th:href="@{|/buyProduct?sifra=${proizvInfo.sifra}|}">Kupi</a>
+        </li>
+
+        <th:block sec:authorize="hasAuthority('MANAGER')">
+            <li>
+                <a style="color:red;"
+                   th:href="@{|/admin/proizvod?sifra=${proizvodiInfo.sifra}|}">Uredi proizvod</a>
+            </li>
+        </th:block>
+    </ul>
+</div>
+
+<br/>
+<div class="page-navigator" th:if="${paginationProducts.totalPages > 1}">
+    <th:block th:each="page : ${paginationProducts.navigationPages}">
+
+        <a th:href="@{|/productList?page=${page}|}" th:if="${page != -1}"
+           class="nav-item" th:utext="${page}"></a>
+
+        <span class="nav-item" th:if="${page == -1}"> ... </span>
+
+    </th:block>
+</div>
+
+<th:block th:include="/_footer"></th:block>
+
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Potvrda kosarice</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/stilovi.css}">
+</head>
+<body>
+<th:block th:include="/_header"></th:block>
+<th:block th:include="/_menu"></th:block>
+
+<div class="page-title">Potvrda</div>
+<div class="customer-info-container">
+    <h3>Podaci o kupcu:</h3>
+    <ul>
+        <li>Ime: <span th:utext="${mojaKosarica.kupacInfo.ime}"></span></li>
+        <li>Mail: <span th:utext="${mojaKosarica.kupacInfo.mail}"></span></li>
+        <li>Tel: <span th:utext="${mojaKosarica.kupacInfo.tel}"></span></li>
+        <li>Adresa: <span th:utext="${mojaKosarica.kupacInfo.adresa}"></span></li>
+    </ul>
+    <h3>Košarica pregled:</h3>
+    <ul>
+        <li>Kolicina: <span th:utext="${mojaKosarica.ukKolicinu}"></span>$</li>
+        <li>Ukupno:
+            <span class="total"
+                  th:utext="${#numbers.formatDecimal(mojaKosarica.ukIznos,3,2,'COMMA')}">
+               </span>
+        </li>
+    </ul>
+</div>
+<form method="POST" th:action="@{/shoppingCartConfirmation}">
+
+    <a class="navi-item" th:href="@{/kosarica}">
+        Uredi kosaricu
+    </a>
+
+    <a class="navi-item" th:href="@{/shoppingCartCustomer}">
+        Uredi podatke o kupcu
+    </a>
+
+    <input type="submit" value="Posalji" class="button-send-sc" />
+</form>
+<div class="container">
+    <div class="product-preview-container" th:each="stavakInfo : ${mojaKosarica.kosaricaStavak}">
+        <ul>
+            <li>
+                <img class="product-image"
+                     src="@{|/productImage?code=${cartLineInfo.productInfo.code}|}" />
+            </li>
+            <li>
+                Sifra: <span th:utext="${stavakInfo.proizvodiInfo.sifra}"></span>
+                <input
+                        type="hidden" name="code" th:value="${stavakInfo.proizvodiInfo.sifra}" />
+            </li>
+            <li>Naziv: <span th:utext="${stavakInfo.proizvodiInfo.naziv}"></span></li>
+            <li>Cijena:
+                <span class="price"
+                      th:utext="${#numbers.formatDecimal(stavakInfo.proizvodiInfo.cijena,3,2,'COMMA')}">
+                  </span>
+            </li>
+            <li>Kolicina: <span th:utext="${stavakInfo.kolicina}"></span></li>
+            <li>Subtotal:
+                <span class="subtotal"
+                      th:utext="${#numbers.formatDecimal(stavakInfo.iznos,3,2,'COMMA')}">
+                  </span>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<th:block th:include="/_footer"></th:block>
+
+</body>
+</html>
